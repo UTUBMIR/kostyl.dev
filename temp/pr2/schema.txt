@@ -1,0 +1,239 @@
+authors
+- id (PK) UUID
+- first_name VARCHAR(64) NOT NULL
+- last_name VARCHAR(64) NOT NULL
+- bio (TEXT, NULL)
+- image_path (VARCHAR(2048), NULL)
+
+genres
+- id (PK)
+- name (UK) VARCHAR(64)
+- description (TEXT, NULL)
+
+audiobooks
+- id (PK) UUID
+- title VARCHAR(255) NOT NULL
+- author_id (FK) UUID NOT NULL
+- genre_id (FK) UUID NOT NULL
+- duration (INTEGER) NOT NULL
+- release_year (INTEGER) NOT NULL
+- description (TEXT, NULL)
+- cover_image_path (VARCHAR(2048), NULL)
+
+users
+- id (PK) UUID
+- username (UK) VARCHAR(64) NOT NULL
+- password_hash VARCHAR(128) NOT NULL
+- email (VARCHAR(376, NULL)
+- avatar_path (VARCHAR(2048), NULL)
+
+collections
+- id (PK) UUID
+- user_id (FK) UUID NULL
+- name (VARCHAR(128, NULL) NOT NULL
+- created_at (DATATIME)
+
+audiobook_collection
+- collection_id (PK) (FK) UUID
+- audiobook_id (PK) (FK) UUID
+PK(collection_id, audiobook_id)
+FK(collection_id, audiobook_id)
+
+audiobook_files
+- id (PK)
+- audiobook_id (FK) NOT NULL
+- file_path VARCHAR(2048) NOT NULL
+- format VARCHAR(10) NOT NULL
+- size (INTEGER)
+
+listening_progress
+- id (PK) UUID
+- user_id (FK) UUID NULL
+- audiobook_id (FK) UUID NOT NULL
+- position (INTEGER) NOT NULL
+- last_listened (DATATIME)
+FK(user_id, audiobook_id)
+
+Концептуальна схема:
+
+//www.plantuml.com/plantuml/png/RLJTpjem3BtlK-G5lelTGmNhn8Q4eDgFfbsXq1WQKHBa612RUFSvIQ4eAH9gRSV7vnm7PeuaKjE2AGemfEakvXTgBOf_XH1B9IQJ8zpBaeErF87FycUXqL58X70bX-Z1ty_Q-kQJF82e9RN5umN-5Gp2E3O_le1hK9z9MyCz0o6bxSxQ8pVSG1xBCWVugQaB21UKeLs8xz21T23-WCG4MuZANW4JYWXTw7MjFelVg8d0y0YjF8_zNPk3d-nFFelJJzFUhbVgO_qn44um8uKTZ8E-gemQVHfI2Mflp2y7-Pv2raG_Q-dSpQ8ItwHhEPvV9KbCTrBPheF6iqmDpZTK8KW29UQKERQv6JUkB5IyAayjHYpeVMu2jJHDTr7WOlipIbpeqobMaT-RxK9ta4losUW5lriyIUAN7_elPD8gVcf7RhlPZojyFy12Xz7l5Kyq8LKaWrPy50m3Rskq1mINEPhBgAtJGNZ_GumOe3ol7C-JY7l8Q-arcu5H_g_XFm00
+
+- подумати, як можна покращити вивід в plant uml
+
+@startchen
+
+entity Author {
+  Id <<key>>
+  Name {
+    First Name
+    Last Name
+  }
+  Bio
+  Image Path
+}
+
+entity Genre {
+  Id <<key>>
+  Name
+  Description
+}
+
+entity Audiobook <<weak>> {
+  Id <<key>>
+  Title
+  Duration
+  Release Year
+  Description
+  Cover Image Path
+}
+
+relationship Written <<identifying>> {
+}
+
+Written =1= Author
+Written -N- Audiobook
+
+relationship Describe <<identifying>> {
+}
+
+Describe =1= Genre
+Describe -N- Audiobook
+
+entity User {
+  Id <<key>>
+  Username
+  Password Hash
+  Avatar Path
+}
+
+entity Collection <<weak>> {
+  Id <<key>>
+  Name
+  Created At
+}
+
+relationship Owns <<identifying>> {
+}
+
+Owns =1= User
+Owns -N- Collection 
+
+relationship Includes {
+}
+
+Includes -N- Audiobook
+Includes -N- Collection
+
+
+entity Audiobook_File {
+  Id <<key>>
+  File Path
+  Format
+  Size
+}
+
+relationship Consists_Of <<identifying>> {
+}
+
+Consists_Of =1= Audiobook
+Consists_Of -N- Audiobook_File
+
+
+relationship Listening_Progress <<identifying>> {
+  Id <<key>>
+  Position
+  Last Listened
+}
+
+Listening_Progress -N- User
+Listening_Progress -N- Audiobook
+
+@endchen
+
+Логічна схема:
+
+//www.plantuml.com/plantuml/png/fPJHRjCm58Rl_HHcDsELAgrb6mXDqofMe49mKRM8k-WqEKsiERPbEwlAnZDmoNjm0-8fmXlX91v9HaegxJBd_-FpdTydkJGMjCrIJfxO15EaYWCJn5mpeK13IZaJQBSAgTGsaOIWiCnkwG5axb6R0mg6meZU4ae7T31WqM10NzBbSdRbAiEXBw-PDZOGa68fVvpCNxsTp9-UdHnv0uVT-ef9LrjCFotS0qiXna21JHg-yV79YoFofQQBKMYiuE9UkAwszFny-UxYmZaYDA5coZ8fF4Mp4MGHaoifhtqIgzvkbbdURZS-FRsFeKerQBpgG5ux4A-NS-sMeqn30LhAim-BwPlft4iQEOB1O8kWctBtX9I6yWPri5_QcK6_2Ldl-8NtFu5xbm9ZDb97GG8cQLb7OzURKao1yKRvsVEpeWmtO47t0eUISmoBWIliS2_itRct1_AKNWirWiKe05iwhYQBwMBsVjgvH44DLgrJ0woMTdFK1tLOEXkk6KU_kkkU47gEl__GURKlfTw-0E-GEWNRJkku40txZFLUDd4vCnO54t6Wj8mrcegOgqTUsnxpA6bOvnVbVraL6aR_tEqXpR_btmz_Vyr_vB_odmH6zEvkE9ItnJ_2UJUQMJGaVb0EmM8ijOiY8jbVBImakH66XBM_B38HyYn2Gs3rG56WRI3NBM5T20cOnj5S5RLgZCOfRS71NAA8ifJ_0G00
+
+@startuml
+!theme plain
+skinparam linetype ortho
+
+entity "authors" as a1 {
+  * **id** : UUID
+  --
+  * **first_name** : VARCHAR(64)
+  * **last_name** : VARCHAR(64)
+  bio : TEXT
+  image_path : VARCHAR(2048)
+}
+
+entity "genres" as g1 {
+  * **id** : UUID
+  --
+  * **name** : VARCHAR(64) <<UK>>
+  description : TEXT
+}
+
+entity "audiobooks" as ab1 {
+  * **id** : UUID
+  --
+  * **title** : VARCHAR(255)
+  * **author_id** : UUID <<FK>>
+  * **genre_id** : UUID <<FK>>
+  * **duration** : INTEGER
+  * **release_year** : INTEGER
+  description : TEXT
+  cover_image_path : VARCHAR(2048)
+}
+
+entity "users" as u1 {
+  * **id** : UUID
+  --
+  * **username** : VARCHAR(64) <<UK>>
+  * **password_hash** : VARCHAR(128)
+  email : VARCHAR(376)
+  avatar_path : VARCHAR(2048)
+}
+
+entity "collections" as c1 {
+  * **id** : UUID
+  --
+  * **user_id** : UUID <<FK>>
+  * **name** : VARCHAR(128)
+  * **created_at** : DATETIME
+}
+
+entity "audiobook_collection" as ac1 {
+  * **collection_id** : UUID <<FK>>
+  * **audiobook_id** : UUID <<FK>>
+}
+
+entity "audiobook_files" as af1 {
+  * **id** : UUID
+  --
+  * **audiobook_id** : UUID <<FK>>
+  * **file_path** : VARCHAR(2048)
+  * **format** : VARCHAR(10)
+  size : INTEGER
+}
+
+entity "listening_progress" as lp1 {
+  * **id** : UUID
+  --
+  * **user_id** : UUID <<FK>>
+  * **audiobook_id** : UUID <<FK>>
+  * **position** : INTEGER
+  * **last_listened** : DATETIME
+}
+
+' Зв'язки
+a1 ||--o{ ab1 : writes
+g1 ||--o{ ab1 : categorized
+u1 ||--o{ c1 : owns
+c1 ||--o{ ac1 : includes
+ab1 ||--o{ ac1 : part_of
+ab1 ||--o{ af1 : has
+u1 ||--o{ lp1 : listens
+ab1 ||--o{ lp1 : listened
+@enduml
+
