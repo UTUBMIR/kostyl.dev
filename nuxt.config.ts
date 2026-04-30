@@ -160,6 +160,8 @@ export default defineNuxtConfig({
                         'bash',
                         'shell',
                         'powershell',
+                        'docker',
+                        'dockerfile',
                         // Data/Config Languages
                         'json',
                         'jsonc',
