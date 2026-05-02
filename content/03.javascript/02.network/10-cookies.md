@@ -316,16 +316,16 @@ Cookie відправляється на сервер **тільки** якщо 
 ```mermaid
 flowchart TD
     User((Користувач))
-    Evil[Сайт хакера\nattacker.com]
-    Bank[Ваш сайт\nbank.com]
+    Evil[Сайт хакера<br/>attacker.com]
+    Bank[Ваш сайт<br/>bank.com]
 
     User --> Evil
 
     subgraph Browser["Браузер (Cookie: SameSite=Lax)"]
         direction TB
-        Link["1. Клік по посиланню\n<a href='bank.com'>"]
-        Img["2. Прихований запит\n<img src='bank.com/pay'>"]
-        Form["3. Авто-форма\n<form method='POST'>"]
+        Link["1. Клік по посиланню<br/><a href='bank.com'>"]
+        Img["2. Прихований запит<br/><img src='bank.com/pay'>"]
+        Form["3. Авто-форма<br/><form method='POST'>"]
     end
 
     Evil -.-> Link

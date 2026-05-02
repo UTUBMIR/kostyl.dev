@@ -116,6 +116,9 @@ h1 { color: steelblue; }
 | ER-діаграма бази даних          | PlantUML |
 | Git flow візуалізація           | Mermaid  |
 
+> [!IMPORTANT]
+> **Синтаксис Mermaid:** Завжди використовуйте `<br/>` для переносу рядків всередині блоків/нод Mermaid (замість `\n`).
+
 > **Детальний синтаксис:** див. `DOCUS_COMPONENTS.md` → розділи Mermaid та PlantUML.
 
 ### Зображення та GIF

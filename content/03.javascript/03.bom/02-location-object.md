@@ -35,25 +35,25 @@ graph LR
     URL["https://site.com:8080/path/page?q=search#hash"]
 
     subgraph Protocol
-    P["location.protocol<br>https:"]
+    P["location.protocol<br/>https:"]
     end
 
     subgraph Host
-    H["location.host<br>site.com:8080"]
-    HN["location.hostname<br>site.com"]
-    Port["location.port<br>8080"]
+    H["location.host<br/>site.com:8080"]
+    HN["location.hostname<br/>site.com"]
+    Port["location.port<br/>8080"]
     end
 
     subgraph Path
-    PathName["location.pathname<br>/path/page"]
+    PathName["location.pathname<br/>/path/page"]
     end
 
     subgraph Search
-    S["location.search<br>?q=search"]
+    S["location.search<br/>?q=search"]
     end
 
     subgraph Hash
-    Ha["location.hash<br>#hash"]
+    Ha["location.hash<br/>#hash"]
     end
 
     URL --> P
