@@ -672,6 +672,69 @@ User "1" -- "*" Order : places
 
 ---
 
+### ::concept-canvas
+
+Компонент для створення довільних ілюстрацій, архітектурних схем та картин за допомогою **чистого SVG + TailwindCSS**. Використання `<svg>` як основи гарантує стабільний рендеринг, масштабованість, відсутність проблем з гідратацією Vue та точне позиціонування елементів незалежно від ширини екрану.
+
+**Синтаксис:**
+
+```markdown
+::concept-canvas{caption="Схема контейнеризації" pattern="dots" frame="macos"}
+<svg viewBox="0 0 800 300" class="w-full h-auto block" xmlns="http://www.w3.org/2000/svg">
+  <!-- Зворотній проксі -->
+  <g transform="translate(100, 100)">
+    <rect x="0" y="0" width="80" height="80" rx="16" class="fill-blue-500/10 stroke-blue-500/30" stroke-width="2" />
+    <g transform="translate(24, 16)">
+      <Icon name="i-logos-nginx" class="w-8 h-8" />
+    </g>
+    <text x="40" y="96" text-anchor="middle" class="text-sm font-bold fill-gray-600 dark:fill-gray-300">Nginx</text>
+  </g>
+
+  <!-- Конектор -->
+  <line x1="200" y1="140" x2="350" y2="140" class="stroke-blue-400/50" stroke-width="2" />
+  <circle cx="275" cy="140" r="4" class="fill-blue-400 animate-ping" />
+
+  <!-- Бекенд -->
+  <g transform="translate(370, 100)">
+    <rect x="0" y="0" width="80" height="80" rx="16" class="fill-green-500/10 stroke-green-500/30" stroke-width="2" />
+    <g transform="translate(24, 16)">
+      <Icon name="i-logos-nodejs-icon" class="w-8 h-8" />
+    </g>
+    <text x="40" y="96" text-anchor="middle" class="text-sm font-bold fill-gray-600 dark:fill-gray-300">Node.js</text>
+  </g>
+</svg>
+::
+```
+
+**Особливості:**
+- **Ізоляція від Markdown (`unwrap="p"`)**: Компонент автоматично видаляє зайві абзаци `<p>`, якими парсер Nuxt Content міг би випадково обгорнути ваші тексти всередині SVG. Тексти завжди залишатимуться на своїх точних координатах.
+- **Вбудована підтримка іконок**: Ви можете сміливо використовувати Vue-компонент `<Icon name="..." />` безпосередньо всередині `<svg>` (бажано обгортаючи його в `<g transform="...">` для позиціонування).
+- **Масштабованість (`viewBox`)**: Завжди використовуйте `viewBox="0 0 W H"` та клас `w-full h-auto block` у кореневому тезі `<svg>`, щоб діаграма була адаптивною і не ламалася на мобільних пристроях.
+- **Преміальні фони та Фрейми**: Вбудована підтримка патернів (`grid` або `dots`) та рамок застосунків (`macos`, `browser`, `terminal`).
+- **Інтерактивні кроки**: Використовуючи атрибут `steps="N"` та Tailwind-класи `group-data-[step=N]/canvas:`, ви можете створювати покрокові анімації всередині SVG (змінюючи `opacity`, `translate` тощо) без жодного рядка JS.
+- **Відступи (Важливо!)**: **НЕ робіть порожніх рядків** між тегами всередині `<svg>...</svg>`. Порожні рядки сприймаються Markdown-парсером як розрив абзацу, що може зламати верстку коду!
+
+**Атрибути:**
+
+| Атрибут     | Тип    | За замовчуванням | Опис                                                                 |
+| ----------- | ------ | ---------------- | -------------------------------------------------------------------- |
+| `caption`   | string | `""`             | Підпис під ілюстрацією (дрібним текстом).                            |
+| `pattern`   | string | `grid`           | Тип фону: `grid` (сітка), `dots` (крапки), `none` (без патерну).     |
+| `bg`        | string | `soft`           | Колір фону: `soft` (дуже м'який сірий), `white`, `dark`, `transparent`.|
+| `frame`     | string | `none`           | Рамка вікна: `none`, `macos`, `browser`, `terminal`.                 |
+| `steps`     | number | `1`              | Кількість кроків для анімації. Додає панель керування знизу.         |
+| `padding`   | string | `p-8 sm:p-12`    | Внутрішні відступи (Tailwind класи).                                 |
+| `minHeight` | string | `min-h-[250px]`  | Мінімальна висота полотна.                                           |
+| `align`     | string | `center`         | Вирівнювання контенту по горизонталі: `center`, `start`, `end`.      |
+
+**CSS Змінні (Семантичні кольори):**
+Компонент автоматично надає доступ до семантичних кольорів, які можна використовувати в Tailwind:
+- `bg-[var(--canvas-primary)]`
+- `text-[var(--canvas-accent)]`
+- `border-[var(--canvas-muted)]`
+
+---
+
 ### ::debugger-view
 
 Візуалізація стану програми (змінних, регістрів) у стилі дебаг-панелі сучасних IDE (Xcode, VS Code).
