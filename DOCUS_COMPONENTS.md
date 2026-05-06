@@ -672,66 +672,68 @@ User "1" -- "*" Order : places
 
 ---
 
-### ::concept-canvas
+### ::diagram-flow
 
-Компонент для створення довільних ілюстрацій, архітектурних схем та картин за допомогою **чистого SVG + TailwindCSS**. Використання `<svg>` як основи гарантує стабільний рендеринг, масштабованість, відсутність проблем з гідратацією Vue та точне позиціонування елементів незалежно від ширини екрану.
+**Інтерактивний компонент для створення node-based діаграм** на базі Vue Flow. На відміну від статичного SVG, `diagram-flow` використовує HTML для нодів, що забезпечує ідеальний рендеринг тексту, автоматичні з'єднувальні лінії та інтерактивність (zoom, pan, drag).
+
+> [!TIP]
+> **Коли використовувати:**
+> - Складні блок-діаграми з багатьма з'єднаннями
+> - Архітектурні схеми, де важливий читабельний текст
+> - Інтерактивні діаграми (користувач може масштабувати, переміщати)
+> - Графи залежностей, flow-charts, state machines
 
 **Синтаксис:**
 
 ```markdown
-::concept-canvas{caption="Схема контейнеризації" pattern="dots" frame="macos"}
-<svg viewBox="0 0 800 300" class="w-full h-auto block" xmlns="http://www.w3.org/2000/svg">
-  <!-- Зворотній проксі -->
-  <g transform="translate(100, 100)">
-    <rect x="0" y="0" width="80" height="80" rx="16" class="fill-blue-500/10 stroke-blue-500/30" stroke-width="2" />
-    <g transform="translate(24, 16)">
-      <Icon name="i-logos-nginx" class="w-8 h-8" />
-    </g>
-    <text x="40" y="96" text-anchor="middle" class="text-sm font-bold fill-gray-600 dark:fill-gray-300">Nginx</text>
-  </g>
-
-  <!-- Конектор -->
-  <line x1="200" y1="140" x2="350" y2="140" class="stroke-blue-400/50" stroke-width="2" />
-  <circle cx="275" cy="140" r="4" class="fill-blue-400 animate-ping" />
-
-  <!-- Бекенд -->
-  <g transform="translate(370, 100)">
-    <rect x="0" y="0" width="80" height="80" rx="16" class="fill-green-500/10 stroke-green-500/30" stroke-width="2" />
-    <g transform="translate(24, 16)">
-      <Icon name="i-logos-nodejs-icon" class="w-8 h-8" />
-    </g>
-    <text x="40" y="96" text-anchor="middle" class="text-sm font-bold fill-gray-600 dark:fill-gray-300">Node.js</text>
-  </g>
-</svg>
+::diagram-flow{caption="Мікросервісна архітектура" height="600px" :showMinimap="true" frame="macos" :nodes="[{id:'1',position:{x:100,y:50},data:{label:'API Gateway'},style:{background:'#3b82f6',color:'white',fontWeight:'bold'}},{id:'2',position:{x:50,y:200},data:{label:'Auth Service'}},{id:'3',position:{x:250,y:200},data:{label:'User Service'}},{id:'4',position:{x:150,y:350},data:{label:'PostgreSQL'},style:{background:'#336791',color:'white'}}]" :edges="[{source:'1',target:'2',animated:true,label:'JWT'},{source:'1',target:'3',animated:true},{source:'2',target:'4',label:'SQL'},{source:'3',target:'4',label:'SQL'}]"}
 ::
 ```
 
-**Особливості:**
-- **Ізоляція від Markdown (`unwrap="p"`)**: Компонент автоматично видаляє зайві абзаци `<p>`, якими парсер Nuxt Content міг би випадково обгорнути ваші тексти всередині SVG. Тексти завжди залишатимуться на своїх точних координатах.
-- **Вбудована підтримка іконок**: Ви можете сміливо використовувати Vue-компонент `<Icon name="..." />` безпосередньо всередині `<svg>` (бажано обгортаючи його в `<g transform="...">` для позиціонування).
-- **Масштабованість (`viewBox`)**: Завжди використовуйте `viewBox="0 0 W H"` та клас `w-full h-auto block` у кореневому тезі `<svg>`, щоб діаграма була адаптивною і не ламалася на мобільних пристроях.
-- **Преміальні фони та Фрейми**: Вбудована підтримка патернів (`grid` або `dots`) та рамок застосунків (`macos`, `browser`, `terminal`).
-- **Інтерактивні кроки**: Використовуючи атрибут `steps="N"` та Tailwind-класи `group-data-[step=N]/canvas:`, ви можете створювати покрокові анімації всередині SVG (змінюючи `opacity`, `translate` тощо) без жодного рядка JS.
-- **Відступи (Важливо!)**: **НЕ робіть порожніх рядків** між тегами всередині `<svg>...</svg>`. Порожні рядки сприймаються Markdown-парсером як розрив абзацу, що може зламати верстку коду!
+**Атрибути `::diagram-flow`:**
 
-**Атрибути:**
+| Атрибут       | Тип     | За замовчуванням | Опис                                                                 |
+| ------------- | ------- | ---------------- | -------------------------------------------------------------------- |
+| `nodes`       | array   | `[]`             | Масив нодів (обов'язково: `id`, `position`, `data.label`)           |
+| `edges`       | array   | `[]`             | Масив з'єднань (обов'язково: `source`, `target`)                    |
+| `caption`     | string  | `""`             | Підпис під діаграмою                                                 |
+| `height`      | string  | `500px`          | Висота контейнера діаграми                                           |
+| `showMinimap` | boolean | `false`          | Показувати мінікарту для навігації                                   |
+| `showControls`| boolean | `true`           | Показувати кнопки zoom/fit                                           |
+| `background`  | string  | `dots`           | Тип фону: `dots`, `lines`, `cross`, `none`                           |
+| `interactive` | boolean | `true`           | Дозволити drag, zoom, pan                                            |
+| `fitView`     | boolean | `true`           | Автоматично підігнати масштаб при завантаженні                       |
+| `frame`       | string  | `macos`          | Рамка вікна: `macos`, `browser`, `none`                              |
 
-| Атрибут     | Тип    | За замовчуванням | Опис                                                                 |
-| ----------- | ------ | ---------------- | -------------------------------------------------------------------- |
-| `caption`   | string | `""`             | Підпис під ілюстрацією (дрібним текстом).                            |
-| `pattern`   | string | `grid`           | Тип фону: `grid` (сітка), `dots` (крапки), `none` (без патерну).     |
-| `bg`        | string | `soft`           | Колір фону: `soft` (дуже м'який сірий), `white`, `dark`, `transparent`.|
-| `frame`     | string | `none`           | Рамка вікна: `none`, `macos`, `browser`, `terminal`.                 |
-| `steps`     | number | `1`              | Кількість кроків для анімації. Додає панель керування знизу.         |
-| `padding`   | string | `p-8 sm:p-12`    | Внутрішні відступи (Tailwind класи).                                 |
-| `minHeight` | string | `min-h-[250px]`  | Мінімальна висота полотна.                                           |
-| `align`     | string | `center`         | Вирівнювання контенту по горизонталі: `center`, `start`, `end`.      |
+**Формат нодів:**
+```json
+{
+  "id": "unique-id",
+  "position": { "x": 100, "y": 50 },
+  "data": { "label": "Node Label" },
+  "style": { "background": "#3b82f6", "color": "white" },
+  "class": "custom-class"
+}
+```
 
-**CSS Змінні (Семантичні кольори):**
-Компонент автоматично надає доступ до семантичних кольорів, які можна використовувати в Tailwind:
-- `bg-[var(--canvas-primary)]`
-- `text-[var(--canvas-accent)]`
-- `border-[var(--canvas-muted)]`
+**Формат edges:**
+```json
+{
+  "source": "node-1",
+  "target": "node-2",
+  "label": "Connection Label",
+  "animated": true,
+  "type": "default",
+  "style": { "stroke": "#f59e0b", "strokeWidth": 3 }
+}
+```
+
+**Кастомізація:**
+- **Іконки в нодах**: Додайте HTML з іконками в `data.label` або використовуйте `style` для фону
+- **Кольори нодів**: Через `style: { background: '#3b82f6', color: 'white' }`
+- **Типи з'єднань**: `animated: true` для анімованих ліній
+- **Маркери**: Автоматичні стрілки на кінцях з'єднань
+- **Інтерактивність**: Drag, zoom, pan працюють за замовчуванням
 
 ---
 
@@ -1035,7 +1037,9 @@ to: /link
 | `html-preview`   | block  | Браузерне вікно macOS Chrome       |
 | `debugger-view`  | block  | Стан змінних (IDE style)           |
 | `memory-view`    | block  | Hex Dump / Memory visualizer       |
+| `mermaid`       | custom | Mermaid діаграми               |
+| `diagram-flow`   | custom | Інтерактивні node-based діаграми   |
 
 ---
 
-> **Останнє оновлення:** Березень 2026
+> **Останнє оновлення:** Травень 2026
