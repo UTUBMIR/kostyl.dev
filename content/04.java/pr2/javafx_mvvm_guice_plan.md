@@ -491,7 +491,7 @@ audiobook-platform/
    - `CollectionViewModel` для управління колекціями.
 
 7. **Views та Controllers** (~150 рядків)
-   - `AudiobookListView.fxml`:
+   - `audiobook-list-view.fxml`:
      ```xml
      <BorderPane xmlns:fx="http://javafx.com/fxml">
          <top>
@@ -931,7 +931,7 @@ audiobook-platform/
          @Override
          public void start(Stage stage) {
              // Завантаження FXML та ініціалізація
-             FXMLLoader loader = new FXMLLoader(getClass().getResource("AudiobookListView.fxml"));
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("audiobook-list-view.fxml"));
              Parent root = loader.load();
              stage.setScene(new Scene(root));
              stage.show();
@@ -1036,9 +1036,9 @@ audiobook-platform/
          private final Map<String, String> screens = new HashMap<>();
          
          public ScreenRegistry() {
-             screens.put("audiobook-list", "/fxml/AudiobookListView.fxml");
-             screens.put("audiobook-form", "/fxml/AudiobookFormView.fxml");
-             screens.put("author-list", "/fxml/AuthorListView.fxml");
+             screens.put("audiobook-list", "/fxml/audiobook-list-view.fxml");
+             screens.put("audiobook-form", "/fxml/audiobook-form-view.fxml");
+             screens.put("author-list", "/fxml/author-list-view.fxml");
          }
          
          public String getFxmlPath(String screenId) {
@@ -1399,7 +1399,7 @@ audiobook-platform/
          public void start(Stage primaryStage) {
              injector = Guice.createInjector(new AudiobookModule());
              
-             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
              loader.setControllerFactory(injector::getInstance);
              Parent root = loader.load();
              
@@ -1461,9 +1461,9 @@ audiobook-platform/
 
 2. **FXML: Декларативний опис UI** (~150 рядків)
    - Структура FXML-файлу: `<?xml version>`, `<BorderPane>`, `fx:controller`.
-   - Приклад: `AudiobookListView.fxml` з TableView, кнопками "Add", "Delete", "Refresh".
+   - Приклад: `audiobook-list-view.fxml` з TableView, кнопками "Add", "Delete", "Refresh".
    - Атрибут `fx:id` — зв'язок з полями Controller.
-   - `::code-tree` — структура проєкту: `resources/fxml/AudiobookListView.fxml`, `controller/AudiobookListController.java`.
+   - `::code-tree` — структура проєкту: `resources/fxml/audiobook-list-view.fxml`, `controller/AudiobookListController.java`.
 
 3. **Controller: Ін'єкція FXML-компонентів** (~120 рядків)
    - Анотація `@FXML` для полів: `@FXML private TableView<AudiobookViewModel> audiobookTable;`.
