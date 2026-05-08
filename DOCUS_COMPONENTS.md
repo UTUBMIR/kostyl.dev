@@ -384,9 +384,9 @@ interface ComplexInterface {
 
 **Атрибути:**
 
-| Атрибут | Тип    | Опис              |
-| ------- | ------ | ----------------- |
-| `title` | string | Заголовок кнопки  |
+| Атрибут | Тип    | Опис                      |
+| ------- | ------ | ------------------------- |
+| `title` | string | Заголовок кнопки          |
 | `open`  | bool   | Відкрито за замовчуванням |
 
 ---
@@ -473,32 +473,32 @@ graph TD
 
 **Підтримувані типи діаграм:**
 
-| Тип                | Використання               |
-| ------------------ | -------------------------- |
-| `graph`/`flowchart`| Блок-схеми, потоки даних   |
-| `sequenceDiagram`  | Взаємодія між актором       |
-| `classDiagram`     | UML класи                  |
-| `stateDiagram-v2`  | Стани та переходи          |
-| `erDiagram`        | Entity Relationship        |
-| `gantt`            | Діаграми Ганта             |
-| `pie`              | Кругові діаграми           |
-| `timeline`         | Часові лінії               |
-| `mindmap`          | Ментальні карти            |
-| `gitGraph`         | Git-гілки                  |
+| Тип                 | Використання             |
+| ------------------- | ------------------------ |
+| `graph`/`flowchart` | Блок-схеми, потоки даних |
+| `sequenceDiagram`   | Взаємодія між актором    |
+| `classDiagram`      | UML класи                |
+| `stateDiagram-v2`   | Стани та переходи        |
+| `erDiagram`         | Entity Relationship      |
+| `gantt`             | Діаграми Ганта           |
+| `pie`               | Кругові діаграми         |
+| `timeline`          | Часові лінії             |
+| `mindmap`           | Ментальні карти          |
+| `gitGraph`          | Git-гілки                |
 
 > [!IMPORTANT]
 > **Перенос рядків у нодах:**
 > У Mermaid-діаграмах для переносу рядка всередині текстових блоків (наприклад, `A["Перший рядок\nДругий рядок"]`) **обов'язково** використовуйте HTML-тег `<br/>` замість символу `\n`.
-> 
+>
 > **Правильно:** `A["Рядок 1<br/>Рядок 2"]`
 > **Неправильно:** `A["Рядок 1\nРядок 2"]`
 
 **Рекомендована кольорова схема:**
 
--   Primary: `#3b82f6` (Blue)
--   Secondary: `#64748b` (Slate)
--   Accent: `#f59e0b` (Amber) — для важливих нодів
--   Text: `#ffffff` (White)
+- Primary: `#3b82f6` (Blue)
+- Secondary: `#64748b` (Slate)
+- Accent: `#f59e0b` (Amber) — для важливих нодів
+- Text: `#ffffff` (White)
 
 ---
 
@@ -537,23 +537,23 @@ User "1" -- "*" Order : places
 
 **Атрибути:**
 
-| Атрибут  | Тип    | За замовчуванням            | Опис                    |
-| -------- | ------ | --------------------------- | ----------------------- |
-| `server` | string | `https://www.plantuml.com/plantuml` | PlantUML сервер  |
-| `format` | string | `svg`                       | `svg`, `png`, `txt`     |
-| `alt`    | string | `PlantUML Diagram`          | Alt текст зображення    |
+| Атрибут  | Тип    | За замовчуванням                    | Опис                 |
+| -------- | ------ | ----------------------------------- | -------------------- |
+| `server` | string | `https://www.plantuml.com/plantuml` | PlantUML сервер      |
+| `format` | string | `svg`                               | `svg`, `png`, `txt`  |
+| `alt`    | string | `PlantUML Diagram`                  | Alt текст зображення |
 
 **Підтримувані типи діаграм:**
 
-| Тип                | Використання                     |
-| ------------------ | -------------------------------- |
-| `@startuml`        | UML діаграми (class, sequence)   |
-| `@startmindmap`    | Ментальні карти                  |
-| `@startwbs`        | Work Breakdown Structure         |
-| `@startgantt`      | Діаграми Ганта                   |
-| `@startsalt`       | Wireframes                       |
-| `@startjson`       | JSON візуалізація                |
-| `@startyaml`       | YAML візуалізація                |
+| Тип             | Використання                   |
+| --------------- | ------------------------------ |
+| `@startuml`     | UML діаграми (class, sequence) |
+| `@startmindmap` | Ментальні карти                |
+| `@startwbs`     | Work Breakdown Structure       |
+| `@startgantt`   | Діаграми Ганта                 |
+| `@startsalt`    | Wireframes                     |
+| `@startjson`    | JSON візуалізація              |
+| `@startyaml`    | YAML візуалізація              |
 
 ---
 
@@ -609,6 +609,7 @@ User "1" -- "*" Order : places
 
 ```markdown
 ::terminal-preview{title="dotnet run" :cursor="true"}
+
 <div class="line"><span class="opacity-40">$</span> <strong class="font-bold">dotnet run</strong></div>
 <div class="line"><span class="text-green-400 font-bold">SUCCESS:</span> Build completed in 1.8s.</div>
 <div class="line"></div>
@@ -619,13 +620,13 @@ User "1" -- "*" Order : places
 
 **Атрибути:**
 
-| Атрибут       | Тип     | За замовчуванням | Опис                                                                 |
-| ------------- | ------- | ---------------- | ------------------------------------------------ |
-| `title`       | string  | `bash`           | Заголовок вікна                                  |
-| `showButtons` | boolean | `true`           | Показувати кнопки macOS                          |
-| `cursor`      | boolean | `false`          | Додає блимаючий курсор у кінці                   |
-| `expandable`  | boolean | `false`          | Додає можливість розгортання довгого виводу      |
-| `maxHeight`   | string  | `320px`          | Максимальна висота у згорнутому стані            |
+| Атрибут       | Тип     | За замовчуванням | Опис                                        |
+| ------------- | ------- | ---------------- | ------------------------------------------- |
+| `title`       | string  | `bash`           | Заголовок вікна                             |
+| `showButtons` | boolean | `true`           | Показувати кнопки macOS                     |
+| `cursor`      | boolean | `false`          | Додає блимаючий курсор у кінці              |
+| `expandable`  | boolean | `false`          | Додає можливість розгортання довгого виводу |
+| `maxHeight`   | string  | `320px`          | Максимальна висота у згорнутому стані       |
 
 **Стилізація контенту:**
 
@@ -634,16 +635,16 @@ User "1" -- "*" Order : places
 1.  **Рядки**: Огортайте кожен рядок у `<div class="line">...</div>` для чіткого вертикального розділення.
 2.  **Промпт (Запит)**: Використовуйте `<span class="opacity-40">$</span>` для імітації системного символу. Опційно додайте `mr-2`.
 3.  **Кольори**: Використовуйте Tailwind класи:
-    -   `text-green-400` — успіх, позитивні статуси.
-    -   `text-blue-400` — інформаційні повідомлення, акценти.
-    -   `text-yellow-400` — попередження.
-    -   `text-rose-400` — помилки.
-    -   `text-gray-400` або `opacity-40` — другорядний текст (шляхи, дати).
-4.  **Жирний текст**: 
-    -   Використовуйте клас `font-bold`.
-    -   Альтернативно: теги `<strong>` або `<b>`.
-    -   > [!WARNING]
-    -   > Майте на увазі, що Markdown-символи (наприклад, `**брудний**`) можуть **не розпізнаватися** всередині сирих HTML-тегів на кшталт `<div>`. У таких випадках використовуйте HTML-теги або MDC-синтаксис (`:strong[текст]`).
+    - `text-green-400` — успіх, позитивні статуси.
+    - `text-blue-400` — інформаційні повідомлення, акценти.
+    - `text-yellow-400` — попередження.
+    - `text-rose-400` — помилки.
+    - `text-gray-400` або `opacity-40` — другорядний текст (шляхи, дати).
+4.  **Жирний текст**:
+    - Використовуйте клас `font-bold`.
+    - Альтернативно: теги `<strong>` або `<b>`.
+    - > [!WARNING]
+    - > Майте на увазі, що Markdown-символи (наприклад, `**брудний**`) можуть **не розпізнаватися** всередині сирих HTML-тегів на кшталт `<div>`. У таких випадках використовуйте HTML-теги або MDC-синтаксис (`:strong[текст]`).
 
 ---
 
@@ -655,85 +656,21 @@ User "1" -- "*" Order : places
 
 ````markdown
 ::html-preview
+
 ```html
 <div class="p-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl text-white shadow-xl">
-  <h1 class="text-3xl font-black mb-4">Привіт, Tailwind v4!</h1>
-  <button class="mt-4 px-6 py-2 bg-white text-indigo-600 font-bold rounded-full">
-    Натисни мене
-  </button>
+    <h1 class="text-3xl font-black mb-4">Привіт, Tailwind v4!</h1>
+    <button class="mt-4 px-6 py-2 bg-white text-indigo-600 font-bold rounded-full">Натисни мене</button>
 </div>
 ```
+
 ::
 ````
 
 **Особливості:**
+
 - Автоматично рендерить перший знайдений блок коду всередині.
 - Декоративний інтерфейс Chrome: адресний рядок `localhost:3000`, вкладка з фавіконкою `kostyl.dev` та кнопки macOS.
-
----
-
-### ::diagram-flow
-
-**Інтерактивний компонент для створення node-based діаграм** на базі Vue Flow. На відміну від статичного SVG, `diagram-flow` використовує HTML для нодів, що забезпечує ідеальний рендеринг тексту, автоматичні з'єднувальні лінії та інтерактивність (zoom, pan, drag).
-
-> [!TIP]
-> **Коли використовувати:**
-> - Складні блок-діаграми з багатьма з'єднаннями
-> - Архітектурні схеми, де важливий читабельний текст
-> - Інтерактивні діаграми (користувач може масштабувати, переміщати)
-> - Графи залежностей, flow-charts, state machines
-
-**Синтаксис:**
-
-```markdown
-::diagram-flow{caption="Мікросервісна архітектура" height="600px" :showMinimap="true" frame="macos" :nodes="[{id:'1',position:{x:100,y:50},data:{label:'API Gateway'},style:{background:'#3b82f6',color:'white',fontWeight:'bold'}},{id:'2',position:{x:50,y:200},data:{label:'Auth Service'}},{id:'3',position:{x:250,y:200},data:{label:'User Service'}},{id:'4',position:{x:150,y:350},data:{label:'PostgreSQL'},style:{background:'#336791',color:'white'}}]" :edges="[{source:'1',target:'2',animated:true,label:'JWT'},{source:'1',target:'3',animated:true},{source:'2',target:'4',label:'SQL'},{source:'3',target:'4',label:'SQL'}]"}
-::
-```
-
-**Атрибути `::diagram-flow`:**
-
-| Атрибут       | Тип     | За замовчуванням | Опис                                                                 |
-| ------------- | ------- | ---------------- | -------------------------------------------------------------------- |
-| `nodes`       | array   | `[]`             | Масив нодів (обов'язково: `id`, `position`, `data.label`)           |
-| `edges`       | array   | `[]`             | Масив з'єднань (обов'язково: `source`, `target`)                    |
-| `caption`     | string  | `""`             | Підпис під діаграмою                                                 |
-| `height`      | string  | `500px`          | Висота контейнера діаграми                                           |
-| `showMinimap` | boolean | `false`          | Показувати мінікарту для навігації                                   |
-| `showControls`| boolean | `true`           | Показувати кнопки zoom/fit                                           |
-| `background`  | string  | `dots`           | Тип фону: `dots`, `lines`, `cross`, `none`                           |
-| `interactive` | boolean | `true`           | Дозволити drag, zoom, pan                                            |
-| `fitView`     | boolean | `true`           | Автоматично підігнати масштаб при завантаженні                       |
-| `frame`       | string  | `macos`          | Рамка вікна: `macos`, `browser`, `none`                              |
-
-**Формат нодів:**
-```json
-{
-  "id": "unique-id",
-  "position": { "x": 100, "y": 50 },
-  "data": { "label": "Node Label" },
-  "style": { "background": "#3b82f6", "color": "white" },
-  "class": "custom-class"
-}
-```
-
-**Формат edges:**
-```json
-{
-  "source": "node-1",
-  "target": "node-2",
-  "label": "Connection Label",
-  "animated": true,
-  "type": "default",
-  "style": { "stroke": "#f59e0b", "strokeWidth": 3 }
-}
-```
-
-**Кастомізація:**
-- **Іконки в нодах**: Додайте HTML з іконками в `data.label` або використовуйте `style` для фону
-- **Кольори нодів**: Через `style: { background: '#3b82f6', color: 'white' }`
-- **Типи з'єднань**: `animated: true` для анімованих ліній
-- **Маркери**: Автоматичні стрілки на кінцях з'єднань
-- **Інтерактивність**: Drag, zoom, pan працюють за замовчуванням
 
 ---
 
@@ -750,10 +687,10 @@ User "1" -- "*" Order : places
 
 **Атрибути:**
 
-| Атрибут     | Тип   | Опис                                                |
-| ----------- | ----- | --------------------------------------------------- |
-| `title`     | string| Заголовок секції (наприклад, "Registers" або "Watch")|
-| `variables` | array | Список об'єктів `{name, type, value}`               |
+| Атрибут     | Тип    | Опис                                                  |
+| ----------- | ------ | ----------------------------------------------------- |
+| `title`     | string | Заголовок секції (наприклад, "Registers" або "Watch") |
+| `variables` | array  | Список об'єктів `{name, type, value}`                 |
 
 ---
 
@@ -770,13 +707,13 @@ User "1" -- "*" Order : places
 
 **Атрибути:**
 
-| Атрибут        | Тип    | Опис                                                 |
-| -------------- | ------ | ---------------------------------------------------- |
-| `title`        | string | Заголовок вікна                                      |
-| `startAddress` | string | Початкова адреса в HEX (н-д: `0x00401000`)           |
-| `data`         | array  | Масив байтів (числа 0-255 або HEX рядки)              |
-| `highlight`    | array  | Індекси байтів, які потрібно підсвітити (акцентом)   |
-| `rowSize`      | number | Кількість байтів у одному рядку (default: 16)        |
+| Атрибут        | Тип    | Опис                                               |
+| -------------- | ------ | -------------------------------------------------- |
+| `title`        | string | Заголовок вікна                                    |
+| `startAddress` | string | Початкова адреса в HEX (н-д: `0x00401000`)         |
+| `data`         | array  | Масив байтів (числа 0-255 або HEX рядки)           |
+| `highlight`    | array  | Індекси байтів, які потрібно підсвітити (акцентом) |
+| `rowSize`      | number | Кількість байтів у одному рядку (default: 16)      |
 
 **Особливості**: Використовує CSS Grid для ідеального вирівнювання ASCII-колонки. Підтримує підсвітку важливих зон пам'яті.
 
@@ -808,9 +745,9 @@ public partial class MainWindow : Window {
 
 **Атрибути:**
 
-| Атрибут | Тип    | За замовчуванням | Опис                     |
-| ------- | ------ | ---------------- | ------------------------ |
-| `title` | string | `WPF Preview`    | Заголовок вікна macOS    |
+| Атрибут | Тип    | За замовчуванням | Опис                  |
+| ------- | ------ | ---------------- | --------------------- |
+| `title` | string | `WPF Preview`    | Заголовок вікна macOS |
 
 **Функціональні вкладки:**
 
@@ -824,6 +761,7 @@ public partial class MainWindow : Window {
 > Атрибути на кшталт `Click="Button_Click"` у XAML **не працюватимуть**, оскільки код у вкладці `.cs` слугує лише для візуальної документації. Для імітації натискання кнопок та інших подій використовуйте систему **Commands** (див. нижче).
 
 **Особливості:**
+
 - **Авто-синхронізація теми**: Превью автоматично перемикається на світлу або темну тему Avalonia разом із сайтом.
 - **Підтримка подій (Logging)**: Використовуйте `Command="{Binding ShowMessageCommand}"` та `CommandParameter` у XAML, щоб продемонструвати реакцію інтерфейсу — результат з'явиться у вкладці **Output**.
 - **Segoe UI Integration**: Шрифт Segoe UI вбудований у WASM-хост для максимальної автентичності Windows-інтерфейсів.
@@ -857,18 +795,19 @@ const y = 2
 
 **Через атрибут:**
 
-```markdown
+````markdown
 ```typescript {1,3-5}
-const highlighted = true;
-const normal = false;
-const alsoHighlighted = true;
+const highlighted = true
+const normal = false
+const alsoHighlighted = true
 ```
+````
 
 **Через коментар:**
 
 ```typescript
-const normal = false;
-const highlighted = true; // [!code highlight]
+const normal = false
+const highlighted = true // [!code highlight]
 ```
 
 ### Diffs (показ змін)
@@ -913,6 +852,7 @@ export default defineAppConfig({})
 Спеціальний набір компонентів, що імітує інтерфейс Docker Desktop. Ідеально підходить для візуальних інструкцій та гайдів.
 
 ### ::docker-desktop
+
 Головний контейнер (вікно додатка), що містить сайдбар та хедер.
 
 **Атрибути:**
@@ -922,17 +862,19 @@ export default defineAppConfig({})
 | `os` | string | `mac` | Стиль вікна (`mac` або `windows`) |
 
 ### ::docker-list та ::docker-list-item
+
 Компоненти для імітації таблиці зі списком контейнерів або образів.
 
 **Синтаксис:**
+
 ```markdown
 ::docker-desktop{activeTab="containers"}
-  ::docker-list{title="Containers" :showActions="true"}
-    ::docker-list-item{name="kostyl-web" image="node:20" status="running" ports="3000:3000"}
-    ::
-    ::docker-list-item{name="kostyl-db" image="postgres:15" status="exited" highlight="play"}
-    ::
-  ::
+::docker-list{title="Containers" :showActions="true"}
+::docker-list-item{name="kostyl-web" image="node:20" status="running" ports="3000:3000"}
+::
+::docker-list-item{name="kostyl-db" image="postgres:15" status="exited" highlight="play"}
+::
+::
 ::
 ```
 
@@ -946,14 +888,16 @@ export default defineAppConfig({})
 | `highlight` | string | Опціональна підсвітка кнопок: `play` або `delete` |
 
 ### ::docker-settings
+
 Компонент для імітації сторінки налаштувань Docker Desktop (зокрема для пояснення WSL Integration або Docker Engine).
 
 **Синтаксис:**
+
 ```markdown
 ::docker-desktop{activeTab="settings"}
-  ::docker-settings{activeSection="docker-engine"}
-    Тут контент налаштувань, наприклад JSON редактор або чекбокси.
-  ::
+::docker-settings{activeSection="docker-engine"}
+Тут контент налаштувань, наприклад JSON редактор або чекбокси.
+::
 ::
 ```
 
@@ -1005,40 +949,39 @@ to: /link
 
 ## Перелік усіх компонентів
 
-| Компонент        | Тип    | Призначення                        |
-| ---------------- | ------ | ---------------------------------- |
-| `accordion`      | block  | Розгортаємий FAQ                   |
-| `accordion-item` | nested | Елемент акордеону                  |
-| `badge`          | inline | Версії, теги, статуси              |
-| `callout`        | block  | Загальний callout з налаштуваннями |
-| `card`           | block  | Картка контенту                    |
-| `card-group`     | block  | Група карток                       |
-| `caution`        | block  | Критичне застереження              |
-| `code-collapse`  | block  | Згорнутий блок коду                |
-| `code-group`     | block  | Вкладки з кодом                    |
-| `code-icon`      | inline | Іконка поруч з кодом               |
-| `code-preview`   | block  | Preview результату                 |
-| `code-tree`      | block  | Дерево файлів з кодом              |
-| `collapsible`    | block  | Згортаємий контент                 |
-| `field`          | block  | Документація параметра             |
-| `field-group`    | block  | Група полів                        |
-| `icon`           | inline | Іконка Iconify                     |
-| `kbd`            | inline | Клавіатурна клавіша                |
-| `note`           | block  | Примітка                           |
-| `steps`          | block  | Покрокова інструкція               |
-| `tabs`           | block  | Вкладки контенту                   |
-| `tabs-item`      | nested | Елемент вкладки                    |
-| `tip`            | block  | Корисна порада                     |
-| `warning`        | block  | Застереження                       |
-| `mermaid`        | custom | Mermaid діаграми                   |
-| `plant-uml`      | custom | PlantUML діаграми                  |
-| **Освітні**      |        |                                    |
-| `terminal-preview`| block  | CLI/Terminal macOS вікно           |
-| `html-preview`   | block  | Браузерне вікно macOS Chrome       |
-| `debugger-view`  | block  | Стан змінних (IDE style)           |
-| `memory-view`    | block  | Hex Dump / Memory visualizer       |
-| `mermaid`       | custom | Mermaid діаграми               |
-| `diagram-flow`   | custom | Інтерактивні node-based діаграми   |
+| Компонент          | Тип    | Призначення                        |
+| ------------------ | ------ | ---------------------------------- |
+| `accordion`        | block  | Розгортаємий FAQ                   |
+| `accordion-item`   | nested | Елемент акордеону                  |
+| `badge`            | inline | Версії, теги, статуси              |
+| `callout`          | block  | Загальний callout з налаштуваннями |
+| `card`             | block  | Картка контенту                    |
+| `card-group`       | block  | Група карток                       |
+| `caution`          | block  | Критичне застереження              |
+| `code-collapse`    | block  | Згорнутий блок коду                |
+| `code-group`       | block  | Вкладки з кодом                    |
+| `code-icon`        | inline | Іконка поруч з кодом               |
+| `code-preview`     | block  | Preview результату                 |
+| `code-tree`        | block  | Дерево файлів з кодом              |
+| `collapsible`      | block  | Згортаємий контент                 |
+| `field`            | block  | Документація параметра             |
+| `field-group`      | block  | Група полів                        |
+| `icon`             | inline | Іконка Iconify                     |
+| `kbd`              | inline | Клавіатурна клавіша                |
+| `note`             | block  | Примітка                           |
+| `steps`            | block  | Покрокова інструкція               |
+| `tabs`             | block  | Вкладки контенту                   |
+| `tabs-item`        | nested | Елемент вкладки                    |
+| `tip`              | block  | Корисна порада                     |
+| `warning`          | block  | Застереження                       |
+| `mermaid`          | custom | Mermaid діаграми                   |
+| `plant-uml`        | custom | PlantUML діаграми                  |
+| **Освітні**        |        |                                    |
+| `terminal-preview` | block  | CLI/Terminal macOS вікно           |
+| `html-preview`     | block  | Браузерне вікно macOS Chrome       |
+| `debugger-view`    | block  | Стан змінних (IDE style)           |
+| `memory-view`      | block  | Hex Dump / Memory visualizer       |
+| `mermaid`          | custom | Mermaid діаграми                   |
 
 ---
 

@@ -124,10 +124,6 @@ export default defineNuxtConfig({
         '~/assets/css/code-line-numbers.css',
         '~/assets/css/content-width.css',
         '~/assets/css/zen-mode.css',
-        '@vue-flow/core/dist/style.css',
-        '@vue-flow/core/dist/theme-default.css',
-        '@vue-flow/controls/dist/style.css',
-        '@vue-flow/minimap/dist/style.css',
     ],
 
     content: {
