@@ -12,5 +12,14 @@
         "mermaid": "^11.12.1",
         "nuxt": "^4.1.2",
         "plantuml-encoder": "^1.4.0"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "@parcel/watcher",
+            "better-sqlite3",
+            "esbuild",
+            "sharp",
+            "vue-demi"
+        ]
     }
 }
