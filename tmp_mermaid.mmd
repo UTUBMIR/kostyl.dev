@@ -1,0 +1,15 @@
+stateDiagram-v2
+    [*] --> Pending: "kubectl apply"
+    Pending --> Running: "Scheduler призначив вузол<br/>Kubelet запустив контейнери"
+    Pending --> Failed: "Помилка завантаження образу<br/>або недостатньо ресурсів"
+    Running --> Succeeded: "Контейнери завершились успішно<br/>(restartPolicy: Never)"
+    Running --> Failed: "Контейнер впав<br/>(exit code != 0)"
+    Running --> Running: "Контейнер перезапущено<br/>(restartPolicy: Always)"
+    Failed --> Running: "Контейнер перезапущено<br/>(restartPolicy: OnFailure)"
+    Succeeded --> [*]
+    Failed --> [*]
+
+    style Pending fill:#f59e0b,stroke:#b45309,color:#fff
+    style Running fill:#22c55e,stroke:#15803d,color:#fff
+    style Succeeded fill:#3b82f6,stroke:#1d4ed8,color:#fff
+    style Failed fill:#ef4444,stroke:#b91c1c,color:#fff
