@@ -1,15 +1,13 @@
-# C# Roadmap
+# C# та .NET
 
-Ласкаво просимо до курсу по C#.
-
-## ::card
-
-title: Відкрити Roadmap
-to: /csharp/roadmap
-icon: simple-icons:csharp
+Ласкаво просимо до повного практичного курсу з C# та .NET на **kostyl.dev**.
 
 ---
 
-Переглянути повний план навчання.
+:::card-group
 
+::card{title="Відкрити Roadmap" to="/csharp/roadmap" icon="i-simple-icons-csharp"}
+Переглянути повний план навчання — від основ синтаксису до просунутої багатопоточності, баз даних та системного проектування.
 ::
+
+:::

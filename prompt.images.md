@@ -21,12 +21,15 @@ python scripts/insert_images.py content/path/article.md
 ## 3. КРИТИЧНЕ ПРАВИЛО: Image + PlantUML
 Кожна технічна ілюстрація (архітектура, схема, потоки даних) **ОБОВ'ЯЗКОВО** супроводжується PlantUML-діаграмою безпосередньо під зображенням для забезпечення редагованості та доступності.
 
+- **Світлий фон**: Усі PlantUML-діаграми обов'язково повинні мати білий/світлий задній фон (`skinparam backgroundColor #ffffff`) для забезпечення високої контрастності та зручності читання незалежно від поточної теми сайту (світлої чи темної).
+
 ```markdown
 ![alt text](/images/path/01.png){.diagram-img}
 
 ::plant-uml
 @startuml
 skinparam style plain
+skinparam backgroundColor #ffffff
 ...
 @enduml
 ::
