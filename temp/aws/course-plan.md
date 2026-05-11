@@ -1139,7 +1139,7 @@
 - Порівняння AWS vs Azure vs GCP
 - AWS Global Infrastructure (Regions, Availability Zones, Edge Locations)
 - AWS Well-Architected Framework (5 pillars)
-- Створення AWS Account, AWS Free Tier
+
 - AWS Management Console, AWS CLI, AWS CloudShell
   Практика:
 - Реєстрація AWS акаунту
