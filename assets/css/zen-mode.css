@@ -1,9 +1,12 @@
 /* Zen Mode Styles */
 
 /* Expand center content area from col-span-8 to col-span-10 on desktop */
-@media (min-width: 64rem) {
-    body.zen-mode [data-slot='center'].lg\:col-span-8 {
-        grid-column: span 10 / span 10 !important;
+@layer utilities {
+    @media (min-width: 64rem) {
+        body.zen-mode [data-slot='center'].lg\:col-span-8,
+        body.zen-mode [data-slot='center'].lg\:col-span-9 {
+            grid-column: span 12 / span 12 !important;
+        }
     }
 }
 
