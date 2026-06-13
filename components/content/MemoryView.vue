@@ -27,25 +27,40 @@ const props = defineProps({
   rowSize: {
     type: Number,
     default: 16,
+  },
+  bytes: {
+    type: Array,
+    default: () => null,
+  },
+  labels: {
+    type: Array,
+    default: () => null,
   }
 })
 
 // Convert all data to hex strings and calculate rows
 const rows = computed(() => {
-  const bytes = props.data.map(b => {
+  const sourceData = props.bytes || props.data
+  if (!sourceData || sourceData.length === 0) return []
+
+  const bytesMapped = sourceData.map(b => {
+    if (b === 'pad') return 'pad'
     if (typeof b === 'number') return b.toString(16).padStart(2, '0').toUpperCase()
-    return b.toString().padStart(2, '0').toUpperCase()
+    const str = b.toString()
+    if (str.startsWith('0x')) return str.substring(2).toUpperCase()
+    return str.toUpperCase()
   })
 
   const result = []
   const baseAddr = parseInt(props.startAddress, 16) || 0
 
-  for (let i = 0; i < bytes.length; i += props.rowSize) {
-    const rowBytes = bytes.slice(i, i + props.rowSize)
+  for (let i = 0; i < bytesMapped.length; i += props.rowSize) {
+    const rowBytes = bytesMapped.slice(i, i + props.rowSize)
     const addr = (baseAddr + i).toString(16).padStart(8, '0').toUpperCase()
     
     // ASCII representation
     const ascii = rowBytes.map(hex => {
+      if (hex === 'pad') return '.'
       const byte = parseInt(hex, 16)
       return (byte >= 32 && byte <= 126) ? String.fromCharCode(byte) : '.'
     }).join('')
@@ -78,12 +93,50 @@ const isHighlighted = (index) => props.highlight.includes(index)
             </h5>
         </div>
         <div class="text-[10px] font-mono opacity-40 memory-heading font-bold uppercase tracking-tighter">
-            Hex Dump / ASCII
+            {{ bytes && labels ? 'Memory Layout / Struct Map' : 'Hex Dump / ASCII' }}
         </div>
     </div>
     
-    <!-- Hex Table -->
-    <div class="p-4 font-mono text-[12px] leading-relaxed overflow-x-auto whitespace-pre memory-body">
+    <!-- Byte Grid View (for struct layout) -->
+    <div v-if="bytes && labels" class="p-6 memory-body">
+      <div class="flex flex-wrap gap-2.5 justify-center sm:justify-start">
+        <div 
+          v-for="(b, idx) in bytes" 
+          :key="idx"
+          :class="[
+            'flex flex-col items-center justify-between p-2 rounded-lg border text-center font-mono w-[80px] h-[80px] transition-all duration-300',
+            b === 'pad' 
+              ? 'border-dashed border-gray-300 dark:border-white/10 bg-gray-50/50 dark:bg-white/[0.01] opacity-60' 
+              : 'border-blue-500/20 dark:border-blue-500/30 bg-blue-500/[0.01] dark:bg-blue-500/[0.04] hover:border-blue-500/50 hover:scale-[1.03]'
+          ]"
+        >
+          <!-- Cell Header: Offset -->
+          <span class="text-[9px] opacity-40 select-none font-bold">+{{ idx }}</span>
+          
+          <!-- Cell Value: Byte -->
+          <span 
+            :class="[
+              'text-[13px] font-bold tracking-tight',
+              b === 'pad' ? 'text-gray-400 dark:text-gray-600 font-normal italic' : 'text-blue-600 dark:text-blue-400'
+            ]"
+          >
+            {{ b === 'pad' ? 'pad' : (b.startsWith('0x') ? b.substring(2) : b) }}
+          </span>
+          
+          <!-- Cell Footer: Label -->
+          <span 
+            class="text-[8.5px] font-sans truncate w-full px-0.5" 
+            :class="labels[idx] === '⬜' ? 'opacity-30' : 'font-bold text-gray-700 dark:text-gray-300'"
+            :title="labels[idx]"
+          >
+            {{ labels[idx] }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hex Table (for traditional Hex Dump) -->
+    <div v-else class="p-4 font-mono text-[12px] leading-relaxed overflow-x-auto whitespace-pre memory-body">
       <div v-for="(row, rowIndex) in rows" :key="rowIndex" class="grid grid-cols-[90px_auto_1fr] gap-8 items-center px-4 py-1 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors group">
         <!-- Address -->
         <span class="opacity-40 select-none font-bold whitespace-nowrap">{{ row.address }}</span>

@@ -62,7 +62,7 @@ defineProps({
                 {{ v.type }}
             </td>
             <td class="px-5 py-2.5 border-l break-all debugger-value">
-                <span v-if="v.type === 'string' || v.type === 'char'" class="val-string">"{{ v.value }}"</span>
+                <span v-if="v.type && (v.type.toLowerCase().includes('string') || v.type.toLowerCase().includes('char'))" class="val-string">"{{ v.value }}"</span>
                 <span v-else-if="v.type === 'bool'" class="val-bool font-bold italic">{{ v.value }}</span>
                 <span v-else class="val-num">{{ v.value }}</span>
             </td>
