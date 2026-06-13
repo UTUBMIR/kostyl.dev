@@ -23,10 +23,15 @@ def process_code_blocks(data):
             lang = match.group(1)
             code_content = match.group(2)
             
+            # Мапимо спільні ідентифікатори мов під ті, які підтримує silicon
+            lang_mapped = lang.lower() if lang else ""
+            if lang_mapped == "csharp" or lang_mapped == "c#":
+                lang_mapped = "cs"
+            
             print(f"🔍 Знайдено блок коду ({lang if lang else 'plain'}) в питанні: '{q_text[:30]}...'")
             
             # 1. Створити тимчасовий файл для коду
-            ext = lang if lang else "txt"
+            ext = lang_mapped if lang_mapped else "txt"
             temp_code_file = f"temp_code_{os.getpid()}.{ext}"
             temp_img_file = f"temp_code_{os.getpid()}.png"
             
@@ -45,8 +50,8 @@ def process_code_blocks(data):
                     "-o", temp_img_file, 
                     temp_code_file
                 ]
-                if lang:
-                    silicon_cmd.extend(["-l", lang])
+                if lang_mapped:
+                    silicon_cmd.extend(["-l", lang_mapped])
                 
                 print(f"🎨 Рендеринг зображення коду за допомогою silicon...")
                 subprocess.run(silicon_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
