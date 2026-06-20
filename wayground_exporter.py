@@ -4,81 +4,209 @@ import json
 import os
 import sys
 import re
+import uuid
 import subprocess
+import requests
+
+
+def _get_wayground_session() -> requests.Session | None:
+    """Логінимось на Wayground для завантаження зображень."""
+    # Шукаємо credentials у .env поряд зі скриптом або в scripts/
+    env_dirs = [
+        os.path.dirname(os.path.abspath(__file__)),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts"),
+    ]
+    for d in env_dirs:
+        env_file = os.path.join(d, ".env")
+        if os.path.exists(env_file):
+            with open(env_file) as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, _, v = line.partition("=")
+                        os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+            break
+
+    email    = os.environ.get("WAYGROUND_EMAIL", "")
+    password = os.environ.get("WAYGROUND_PASSWORD", "")
+    if not email or not password:
+        return None
+
+    try:
+        resp = requests.post(
+            "https://wayground.com/_authserver/public/public/v1/auth/login/local",
+            json={"username": email, "password": password, "requestId": str(uuid.uuid4())},
+            headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0",
+                     "Origin": "https://wayground.com"},
+            timeout=15,
+        )
+        sid = resp.cookies.get("_sid")
+        if not sid:
+            return None
+        session = requests.Session()
+        session.cookies.set("_sid", sid, domain="wayground.com")
+        session.headers.update({"User-Agent": "Mozilla/5.0", "Origin": "https://wayground.com"})
+        return session
+    except Exception:
+        return None
+
+
+def _upload_to_wayground(session: requests.Session, img_path: str) -> str | None:
+    """Завантажує PNG на Wayground S3 і повертає finalUrl."""
+    try:
+        with open(img_path, "rb") as f:
+            img_data = f.read()
+        r = session.post(
+            "https://media.quizizz.com/_mdserver/main/getUploadURL"
+            "?destination=quizzes&enableAcceleration=true",
+            timeout=15,
+        )
+        if r.status_code != 200 or not r.json().get("success"):
+            return None
+        res = r.json()["data"]
+        s3 = requests.put(
+            res["signedUrl"],
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            data=img_data,
+            timeout=30,
+        )
+        return res["finalUrl"] if s3.status_code == 200 else None
+    except Exception:
+        return None
+
+
+def _get_catbox_userhash() -> str:
+    """Читає CATBOX_USERHASH з .env."""
+    env_dirs = [
+        os.path.dirname(os.path.abspath(__file__)),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts"),
+    ]
+    for d in env_dirs:
+        env_file = os.path.join(d, ".env")
+        if os.path.exists(env_file):
+            with open(env_file) as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, _, v = line.partition("=")
+                        os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+            break
+    return os.environ.get("CATBOX_USERHASH", "")
+
+
+def _upload_to_catbox(img_path: str, userhash: str) -> str | None:
+    """Завантажує PNG на catbox.moe (постійне зберігання)."""
+    try:
+        with open(img_path, "rb") as f:
+            img_data = f.read()
+        payload = {"reqtype": "fileupload", "userhash": userhash}
+        r = requests.post(
+            "https://catbox.moe/user/api.php",
+            data=payload,
+            files={"fileToUpload": ("image.png", img_data, "image/png")},
+            timeout=30,
+        )
+        url = r.text.strip()
+        return url if url.startswith("https://") else None
+    except Exception:
+        return None
+
+
+def _upload_to_litterbox(img_path: str) -> str | None:
+    """Fallback: завантажує PNG на litterbox.catbox.moe (72h TTL)."""
+    try:
+        with open(img_path, "rb") as f:
+            img_data = f.read()
+        r = requests.post(
+            "https://litterbox.catbox.moe/resources/internals/api.php",
+            data={"reqtype": "fileupload", "time": "72h"},
+            files={"fileToUpload": ("image.png", img_data, "image/png")},
+            timeout=30,
+        )
+        url = r.text.strip()
+        return url if url.startswith("https://") else None
+    except Exception:
+        return None
 
 def process_code_blocks(data):
     # regex to find code blocks: ```lang\ncode\n```
     code_block_pattern = re.compile(r'```(\w*)\n([\s\S]*?)\n```')
-    
+
+    # Ініціалізуємо catbox-хеш для завантаження зображень питань
+    catbox_hash = _get_catbox_userhash()
+    if catbox_hash:
+        print("🔑 Catbox.moe — зображення питань завантажуються постійно")
+    else:
+        print("⚠️  CATBOX_USERHASH не знайдено — litterbox.catbox.moe (72h TTL)")
+
     for item in data:
         if not isinstance(item, dict):
             continue
-            
+
         q_text = item.get("Question Text", "")
         if not q_text:
             continue
-            
+
         match = code_block_pattern.search(q_text)
         if match:
             lang = match.group(1)
             code_content = match.group(2)
-            
-            # Мапимо спільні ідентифікатори мов під ті, які підтримує silicon
+
             lang_mapped = lang.lower() if lang else ""
-            if lang_mapped == "csharp" or lang_mapped == "c#":
+            if lang_mapped in ("csharp", "c#"):
                 lang_mapped = "cs"
-            
+
             print(f"🔍 Знайдено блок коду ({lang if lang else 'plain'}) в питанні: '{q_text[:30]}...'")
-            
-            # 1. Створити тимчасовий файл для коду
+
             ext = lang_mapped if lang_mapped else "txt"
             temp_code_file = f"temp_code_{os.getpid()}.{ext}"
-            temp_img_file = f"temp_code_{os.getpid()}.png"
-            
+            temp_img_file  = f"temp_code_{os.getpid()}.png"
+
             try:
                 with open(temp_code_file, "w", encoding="utf-8") as f:
                     f.write(code_content)
-                
-                # 2. Запустити silicon
+
                 silicon_cmd = [
-                    "silicon", 
-                    "--no-window-controls", 
+                    "silicon",
+                    "--no-window-controls",
                     "--theme", "Visual Studio Dark+",
                     "--no-round-corner",
                     "--pad-horiz", "0",
                     "--pad-vert", "0",
-                    "-o", temp_img_file, 
-                    temp_code_file
                 ]
                 if lang_mapped:
                     silicon_cmd.extend(["-l", lang_mapped])
-                
-                print(f"🎨 Рендеринг зображення коду за допомогою silicon...")
+                silicon_cmd += [temp_code_file, "-o", temp_img_file]
+
+                print("🎨 Рендеринг зображення коду за допомогою silicon...")
                 subprocess.run(silicon_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-                
-                # 3. Залити на catbox.moe
-                print(f"🚀 Завантаження зображення на catbox.moe...")
-                upload_cmd = [
-                    "curl", "-s", "-F", "reqtype=fileupload",
-                    "-F", f"fileToUpload=@{temp_img_file}",
-                    "https://catbox.moe/user/api.php"
-                ]
-                result = subprocess.run(upload_cmd, capture_output=True, text=True, check=True)
-                image_url = result.stdout.strip()
-                
-                if image_url.startswith("https://"):
-                    print(f"🔗 Зображення завантажено: {image_url}")
+
+                image_url = None
+
+                # Спроба 1: catbox.moe (постійне зберігання)
+                if catbox_hash:
+                    print("🚀 Завантаження на catbox.moe...")
+                    image_url = _upload_to_catbox(temp_img_file, catbox_hash)
+                    if image_url:
+                        print(f"🔗 Зображення завантажено (catbox): {image_url}")
+
+                # Спроба 2: litterbox fallback (72h)
+                if not image_url:
+                    print("🚀 Fallback: завантаження на litterbox.catbox.moe...")
+                    image_url = _upload_to_litterbox(temp_img_file)
+                    if image_url:
+                        print(f"🔗 Зображення завантажено (litterbox): {image_url}")
+
+                if image_url:
                     item["Image Link"] = image_url
-                    # Видаляємо блок коду з тексту запитання, щоб він не дублювався
                     item["Question Text"] = code_block_pattern.sub("", q_text).strip()
                 else:
-                    print(f"⚠️ Помилка завантаження: {result.stdout}")
-            
+                    print("⚠️ Не вдалося завантажити зображення — посилання залишається порожнім")
+
             except Exception as e:
                 print(f"⚠️ Не вдалося обробити блок коду: {e}")
-            
+
             finally:
-                # Очистити тимчасові файли
                 if os.path.exists(temp_code_file):
                     os.remove(temp_code_file)
                 if os.path.exists(temp_img_file):
