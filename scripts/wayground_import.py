@@ -240,11 +240,11 @@ def build_question(extracted: dict) -> dict:
         raw_list = correct_raw if isinstance(correct_raw, list) else [correct_raw]
         answer = [x + 1 for x in raw_list]
     else:
-        # extracted: 0-based int → конвертуємо в 1-based для API
+        # extracted: 0-based int — API теж очікує 0-based
         if isinstance(correct_raw, list):
-            answer = correct_raw[0] + 1 if correct_raw else 1
+            answer = correct_raw[0] if correct_raw else 0
         else:
-            answer = (correct_raw + 1) if correct_raw is not None else 1
+            answer = correct_raw if correct_raw is not None else 0
 
     # --- Query media (зображення до питання, якщо є) ---
     query_media = []
