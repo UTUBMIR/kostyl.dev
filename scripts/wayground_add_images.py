@@ -247,7 +247,7 @@ def list_questions(questions: list[dict]) -> None:
             opt_text = strip_html(opt.get("text", ""))
             opt_type = opt.get("type", "text")
             is_image = opt_type == "image"
-            is_correct = (correct_answer == opt_idx + 1)
+            is_correct = (correct_answer == opt_idx)
 
             marker = "✓" if is_correct else " "
             img_tag = " [IMAGE]" if is_image else ""
