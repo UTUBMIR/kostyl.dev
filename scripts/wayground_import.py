@@ -236,9 +236,9 @@ def build_question(extracted: dict) -> dict:
     # --- Правильна відповідь ---
     correct_raw = extracted.get("correct")
     if kind == "MSQ":
-        # extracted: 0-based list [0, 1, 2] → конвертуємо в 1-based для API
+        # extracted: 0-based list [0, 1, 2] — API теж очікує 0-based
         raw_list = correct_raw if isinstance(correct_raw, list) else [correct_raw]
-        answer = [x + 1 for x in raw_list]
+        answer = raw_list
     else:
         # extracted: 0-based int — API теж очікує 0-based
         if isinstance(correct_raw, list):
@@ -262,6 +262,10 @@ def build_question(extracted: dict) -> dict:
 
     query_type = "text_image" if query_media else "text"
 
+    # Для Open-Ended та подібних типів — hasCorrectAnswer = False
+    is_open_ended = kind in ("OPEN", "MSQ_OPEN")
+    has_correct = not is_open_ended
+
     return {
         "time": time_sec * 1000,
         "type": kind,
@@ -270,9 +274,9 @@ def build_question(extracted: dict) -> dict:
             "kind": kind,
             "options": options,
             "settings": {
-                "hasCorrectAnswer": True,
+                "hasCorrectAnswer": has_correct,
                 "fibDataType": "string",
-                "canSubmitCustomResponse": False,
+                "canSubmitCustomResponse": is_open_ended,
                 "doesOptionHaveMultipleTargets": False,
                 "showAdvancedRTE": False,
             },
