@@ -414,6 +414,7 @@ content/05.python/
   - Рівень 1: Створити Pydantic-модель для User з валідацією email, віку, дати.
   - Рівень 2: Побудувати вкладені моделі для JSON API (Order → OrderItem → Product) з custom валідаторами.
   - Рівень 3: Написати generic-валідатор з використанням `Annotated` та `BeforeValidator`.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):**
   - _В цій статті ще немає проєкту — лише підготовка._
 
@@ -448,6 +449,7 @@ content/05.python/
   - Рівень 1: Написати WSGI hello-world та запустити через Gunicorn.
   - Рівень 2: Написати ASGI hello-world з routing (без фреймворку).
   - Рівень 3: Порівняти продуктивність WSGI vs ASGI на I/O-bound задачі (запити до зовнішнього API).
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):**
   - _В цій статті ще немає проєкту — лише підготовка._
 
@@ -491,6 +493,7 @@ content/05.python/
   - Рівень 1: Створити API з 3 ендпоінтами (GET, POST, DELETE) та перевірити у Swagger.
   - Рівень 2: Порівняти продуктивність sync vs async ендпоінту через `time.sleep` vs `asyncio.sleep`.
   - Рівень 3: Написати мінімальний ASGI-додаток без FastAPI, а потім замінити на FastAPI, показуючи різницю в кількості коду.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити структуру проєкту TaskForge
   - Ініціалізувати `pyproject.toml`, встановити FastAPI + uvicorn
@@ -524,6 +527,7 @@ content/05.python/
   - Рівень 1: CRUD ендпоінти для ресурсу `Product` з повною валідацією.
   - Рівень 2: Розбити монолітний `main.py` на `routers/users.py`, `routers/products.py`, `routers/orders.py`.
   - Рівень 3: Реалізувати cursor-based пагінацію та фільтрацію через Query-параметри.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити `routers/projects.py` та `routers/tasks.py` з APIRouter
   - Реалізувати CRUD ендпоінти для Projects і Tasks (in-memory, dict як сховище)
@@ -552,6 +556,7 @@ content/05.python/
   - Рівень 1: Спроектувати набір схем для CRUD API блогу (Post, Comment, Author).
   - Рівень 2: Реалізувати partial update з валідацією бізнес-правил.
   - Рівень 3: Створити generic pagination response `PaginatedResponse[T]` з використанням `Generic`.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити `schemas/project.py` і `schemas/task.py` з повною ієрархією (Base/Create/Read/Update)
   - Додати Enum для `TaskStatus` (TODO, IN_PROGRESS, DONE) та `TaskPriority` (LOW, MEDIUM, HIGH)
@@ -585,6 +590,7 @@ content/05.python/
   - Рівень 1: Створити залежність для пагінації (`skip`, `limit`).
   - Рівень 2: Реалізувати залежність `get_current_user` з ланцюжком (token → decode → user lookup).
   - Рівень 3: Побудувати повний DI-контейнер (DB session → Repository → Service) з override для тестів.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити `services/project_service.py` та `services/task_service.py`
   - Винести бізнес-логіку з роутерів у сервіси
@@ -621,6 +627,7 @@ content/05.python/
   - Рівень 1: Додати глобальний exception handler, який логує помилки та повертає уніфіковану структуру.
   - Рівень 2: Написати middleware для вимірювання часу відповіді, додавання `X-Request-ID` header та structured logging.
   - Рівень 3: Реалізувати rate limiting middleware з використанням `asyncio` та sliding window counter.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити `core/exceptions.py` з кастомними виключеннями (`ProjectNotFoundError`, `TaskNotFoundError`, `ForbiddenError`)
   - Додати глобальні exception handlers
@@ -671,6 +678,7 @@ content/05.python/
   - Рівень 1: Визначити моделі User, Post, Comment з relationships. CRUD через Session.
   - Рівень 2: Оптимізувати N+1 запит через eager loading. Порівняти SQL-запити через `echo=True`.
   - Рівень 3: Реалізувати async session з `create_async_engine` та інтегрувати в FastAPI через DI.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити `models/` з SQLAlchemy моделями: `User`, `Project`, `ProjectMember`, `Task`, `Comment`
   - Налаштувати `core/database.py` з async engine та session factory (PostgreSQL)
@@ -700,6 +708,7 @@ content/05.python/
   - Рівень 1: Ініціалізувати Alembic, створити першу автоміграцію.
   - Рівень 2: Написати data migration (заповнення таблиці seed-даними).
   - Рівень 3: Налаштувати Alembic для async engine та інтегрувати в CI pipeline.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Ініціалізувати Alembic з async-конфігурацією
   - Створити initial migration для всіх моделей
@@ -766,6 +775,7 @@ content/05.python/
   - Рівень 1: Винести SQL-запити з роутерів у Repository клас.
   - Рівень 2: Реалізувати Service layer з бізнес-правилами (наприклад, «не можна видалити проєкт з активними задачами»).
   - Рівень 3: Побудувати повний UoW + Repository + Service стек з тестами через dependency override.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Реструктурувати проєкт відповідно до Clean Architecture
   - Створити `repositories/base.py` з Generic `SQLAlchemyRepository[T]`
@@ -809,6 +819,7 @@ content/05.python/
   - Рівень 1: Реалізувати реєстрацію + логін з JWT.
   - Рівень 2: Додати refresh token flow з ротацією.
   - Рівень 3: Побудувати RBAC-систему з Permission-based авторизацією на рівні проєкту.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити `api/v1/auth.py` з ендпоінтами реєстрації та логіну
   - Реалізувати JWT access + refresh token
@@ -843,6 +854,7 @@ content/05.python/
   - Рівень 1: Написати unit-тести для Pydantic-схем та сервісів.
   - Рівень 2: Написати integration-тести для CRUD ендпоінтів з тестовою БД.
   - Рівень 3: Побудувати повний CI pipeline (lint → type check → test → coverage report).
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити `tests/` з conftest.py (тестова БД, fixtures, dependency overrides)
   - Написати тести для auth flow (register, login, refresh)
@@ -876,6 +888,7 @@ content/05.python/
   - Рівень 1: Відправити email у background після реєстрації.
   - Рівень 2: Побудувати WebSocket чат для коментарів до задачі.
   - Рівень 3: Інтегрувати Celery для генерації PDF-звіту по проєкту із progress reporting через SSE.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Додати WebSocket endpoint для real-time оновлень задач (зміна статусу, нові коментарі)
   - Реалізувати `ConnectionManager` з кімнатами (per project)
@@ -916,6 +929,7 @@ content/05.python/
   - Рівень 1: Контейнеризувати FastAPI додаток з docker-compose.
   - Рівень 2: Налаштувати GitHub Actions CI/CD з автодеплоєм.
   - Рівень 3: Додати Prometheus метрики та Grafana дашборд для API.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskForge):** 🏗️
   - Створити multi-stage `Dockerfile`
   - Створити `docker-compose.yml` (FastAPI + PostgreSQL + Redis)
@@ -945,6 +959,7 @@ content/05.python/
   - `manage.py` — єдина точка входу (порівняння з `dotnet` CLI та `uvicorn`).
   - Порівняльна таблиця: Django startproject vs FastAPI init vs ASP.NET `dotnet new webapi`.
 - **Практика (Теоретична):** Створити Django-проєкт, зрозуміти структуру, запустити dev-сервер.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (Django TaskBoard):** 🏗️ Ініціалізувати Django-версію TaskForge → **TaskBoard**.
   - **Git commit:** `feat: init TaskBoard Django project`
 
@@ -961,6 +976,7 @@ content/05.python/
   - Порівняння: Django ORM ↔ SQLAlchemy 2.0 ↔ EF Core (три ORM пліч-о-пліч).
   - F-expressions, Q-objects, Subquery, RawSQL.
   - Signals: `pre_save`, `post_save` (введення, детальніше у статті 38).
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Створити моделі User, Project, Task, Comment.
   - **Git commit:** `feat: add Django models and initial migrations`
 
@@ -976,6 +992,7 @@ content/05.python/
   - Mixins: `LoginRequiredMixin`, `PermissionRequiredMixin`.
   - Generic Views: як Django генерує CRUD за 10 рядків коду.
   - Порівняння: Django FBV/CBV ↔ FastAPI endpoints ↔ ASP.NET Minimal API / Controllers.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Створити views для проєктів та задач.
   - **Git commit:** `feat: add views and URL routing`
 
@@ -991,6 +1008,7 @@ content/05.python/
   - Static files: `{% static %}`, `STATICFILES_DIRS`, `collectstatic`.
   - Media files: `MEDIA_ROOT`, `MEDIA_URL`, `FileField`, `ImageField`.
   - Порівняння: Django Templates ↔ Razor Pages (ASP.NET). Чому FastAPI не має шаблонізатора (Jinja2 як опція).
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Створити шаблони для списку проєктів, деталей задачі.
   - **Git commit:** `feat: add templates and static files`
 
@@ -1005,6 +1023,7 @@ content/05.python/
   - CSRF protection: `{% csrf_token %}`, як Django захищає від CSRF.
   - Formsets та Inline Formsets.
   - Порівняння: Django Forms ↔ Pydantic validation (FastAPI) ↔ Data Annotations + ModelState (ASP.NET).
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Створити форми створення/редагування проєктів та задач.
   - **Git commit:** `feat: add forms with validation and CSRF protection`
 
@@ -1020,6 +1039,7 @@ content/05.python/
   - Login/Logout/Password reset views.
   - Session-based auth vs Token-based auth (JWT у FastAPI).
   - Порівняння: Django Auth ↔ FastAPI JWT/OAuth2 (стаття 25) ↔ ASP.NET Identity.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Додати автентифікацію та ролі.
   - **Git commit:** `feat: add authentication, custom user model and permissions`
 
@@ -1034,6 +1054,7 @@ content/05.python/
   - Custom admin actions: bulk operations.
   - Overriding admin templates.
   - Порівняння: Django Admin ↔ SQLAdmin (FastAPI) ↔ немає аналога в ASP.NET (потрібно будувати вручну).
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Налаштувати admin panel для всіх моделей.
   - **Git commit:** `feat: configure Django Admin with custom ModelAdmin`
 
@@ -1052,6 +1073,7 @@ content/05.python/
   - Filtering: `django-filter`, `SearchFilter`, `OrderingFilter`.
   - OpenAPI: `drf-spectacular` для генерації Swagger.
   - Порівняння: DRF ↔ FastAPI — детальне порівняння endpoint-by-endpoint.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Побудувати REST API з DRF поруч з template views.
   - **Git commit:** `feat: add Django REST Framework API with ViewSets`
 
@@ -1067,6 +1089,7 @@ content/05.python/
   - Cache framework: Redis backend, per-view cache, template fragment cache, low-level cache API.
   - Порівняння: Django Signals ↔ FastAPI events/background tasks ↔ ASP.NET MediatR/Events.
   - Порівняння: Django Middleware ↔ FastAPI Middleware (стаття 21) ↔ ASP.NET Middleware.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Додати signals для аудиту змін, middleware для логування, Redis cache.
   - **Git commit:** `feat: add signals, custom middleware and Redis caching`
 
@@ -1081,6 +1104,7 @@ content/05.python/
   - Django Channels: WebSocket consumers, Channel Layers (Redis).
   - Routing: `ProtocolTypeRouter`, `URLRouter`, `AuthMiddlewareStack`.
   - Порівняння: Django Channels ↔ FastAPI WebSocket (стаття 27) ↔ SignalR (ASP.NET).
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Додати WebSocket-нотифікації через Channels.
   - **Git commit:** `feat: add Django Channels WebSocket notifications`
 
@@ -1096,6 +1120,7 @@ content/05.python/
   - Fixtures: JSON/YAML fixtures, Factory Boy + `pytest-django`.
   - `pytest-django`: конфігурація, маркери (`@pytest.mark.django_db`).
   - Порівняння: Django TestCase ↔ FastAPI TestClient (стаття 26) ↔ xUnit/WebApplicationFactory (ASP.NET).
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️ Написати тести для models, views та API.
   - **Git commit:** `feat: add test suite with pytest-django`
 
@@ -1129,6 +1154,7 @@ content/05.python/
 
   - **Дерево прийняття рішень:** Блок-схема «який фреймворк обрати для мого проєкту».
   - **Гібридний підхід:** Django + DRF для admin/CMS + FastAPI для high-performance API endpoints.
+- **Практика (Додатковий проект):** 🏗️ На ходу визначиться (самодостатня практична робота від А до Я).
 - **Практика (TaskBoard):** 🏗️
   - Контейнеризувати Django-додаток
   - Налаштувати CI/CD
